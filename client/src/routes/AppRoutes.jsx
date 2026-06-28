@@ -189,20 +189,7 @@ const AppRoutes = () => {
 
       {/* ================= PAYMENT ================= */}
 
-      <Route
-        path="/payment"
-        element={
-          <>
-            {console.log("Current Role:", localStorage.getItem("role"))}
-            {localStorage.getItem("role") === "customer" ||
-            localStorage.getItem("role") === "b2b" ? (
-              <Payment />
-            ) : (
-              <Navigate to="/login" replace />
-            )}
-          </>
-        }
-      />
+      <Route path="/payment" element={<Payment />} />
 
       {/* ================= INVALID URL ================= */}
 

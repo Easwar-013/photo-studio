@@ -1,10 +1,16 @@
 import { useLocation, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 import { toast } from "react-toastify";
 import "./Payment.css";
 
 const Payment = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  useEffect(() => {
+    if (!location.state?.jobId) {
+      navigate("/login");
+    }
+  }, [location, navigate]);
 
   const amount = location.state?.amount || 0;
   const jobId = location.state?.jobId;
