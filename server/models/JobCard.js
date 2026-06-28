@@ -63,6 +63,27 @@ const JobCardSchema = new mongoose.Schema(
     type: Number,
     default: 0
   },
+  paymentStatus: {
+    type: String,
+    enum: [
+      "Not Requested",
+      "Waiting",
+      "Paid",
+      "Rejected"
+    ],
+    default: "Not Requested"
+  },
+
+  paymentRequestedAt: {
+    type: Date,
+    default: null,
+  },
+
+  paymentVerifiedAt: {
+    type: Date,
+    default: null
+  },
+  
 
   notes: {
     type: String,

@@ -2,14 +2,18 @@ const express = require("express");
 const router = express.Router();
 
 const {
-  createOrder,
-  makePayment,
+  requestPayment,
+  approvePayment,
+  rejectPayment,
 } = require("../controllers/paymentController");
 
-// Create Razorpay Order
-router.post("/create-order", createOrder);
+// Customer requests payment
+router.post("/request/:id", requestPayment);
 
-// Update MongoDB after successful payment
-router.post("/pay/:id", makePayment);
+// Owner approves payment
+router.post("/approve/:id", approvePayment);
+
+// Owner rejects payment
+router.post("/reject/:id", rejectPayment);
 
 module.exports = router;

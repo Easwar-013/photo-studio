@@ -1,67 +1,111 @@
-const Razorpay = require("razorpay");
 const JobCard = require("../models/JobCard");
 
-const razorpay = new Razorpay({
-  key_id: process.env.RAZORPAY_KEY_ID || "YOUR_KEY_ID",
-  key_secret: process.env.RAZORPAY_KEY_SECRET || "YOUR_KEY_SECRET",
-});
-
-// Create Razorpay Order
-const createOrder = async (req, res) => {
-  try {
-    const { amount, jobId } = req.body;
-
-    const options = {
-      amount: amount * 100, // convert to paise
-      currency: "INR",
-      receipt: `receipt_${Date.now()}`,
-    };
-
-    const order = await razorpay.orders.create(options);
-
-    res.json({
-      ...order,
-      jobId,
-    });
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({
-      message: "Unable to create Razorpay order",
-    });
-  }
-};
-
-// Update Job after successful payment
-const makePayment = async (req, res) => {
+// Customer requests payment
+const requestPayment = async (req, res) => {
   try {
     const job = await JobCard.findById(req.params.id);
 
     if (!job) {
       return res.status(404).json({
+        success: false,
+        message: "Job Not Found",
+      });
+    }
+
+    job.paymentStatus = "Waiting";
+    job.paymentRequestedAt = new Date();
+
+    await job.save();
+
+    const io = req.app.get("io");
+    io.emit("paymentRequested", job);
+
+    res.json({
+      success: true,
+      message: "Payment request sent successfully.",
+      job,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+// Owner approves payment
+const approvePayment = async (req, res) => {
+  try {
+    const job = await JobCard.findById(req.params.id);
+
+    if (!job) {
+      return res.status(404).json({
+        success: false,
         message: "Job Not Found",
       });
     }
 
     job.paidAmount =
-      Number(job.paidAmount) + Number(job.pendingAmount);
+      Number(job.paidAmount) +
+      Number(job.pendingAmount);
 
     job.pendingAmount = 0;
-    job.status = "Paid";
+
+    job.paymentStatus = "Paid";
+    job.paymentVerifiedAt = new Date();
 
     await job.save();
 
+    const io = req.app.get("io");
+    io.emit("paymentApproved", job);
+
     res.json({
       success: true,
-      message: "Payment Successful",
+      message: "Payment Approved",
+      job,
     });
   } catch (error) {
     res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+// Owner rejects payment
+const rejectPayment = async (req, res) => {
+  try {
+    const job = await JobCard.findById(req.params.id);
+
+    if (!job) {
+      return res.status(404).json({
+        success: false,
+        message: "Job Not Found",
+      });
+    }
+
+    job.paymentStatus = "Rejected";
+
+    await job.save();
+
+    const io = req.app.get("io");
+    io.emit("paymentRejected", job);
+
+    res.json({
+      success: true,
+      message: "Payment Rejected",
+      job,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
       message: error.message,
     });
   }
 };
 
 module.exports = {
-  createOrder,
-  makePayment,
+  requestPayment,
+  approvePayment,
+  rejectPayment,
 };
