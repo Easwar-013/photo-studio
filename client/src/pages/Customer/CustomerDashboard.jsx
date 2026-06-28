@@ -24,7 +24,7 @@ const CustomerDashboard = () => {
       }
 
       const res = await fetch(
-        `${import.meta.env.VITE_API_URL}api/jobcards/customer/${customerEmail}`,
+        `${import.meta.env.VITE_API_URL}/api/jobcards/customer/${customerEmail}`,
       );
 
       const data = await res.json();
