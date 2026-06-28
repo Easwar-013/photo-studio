@@ -23,7 +23,7 @@ const AttendanceHistory = () => {
       }
 
       const res = await fetch(
-        `http://localhost:5000/api/attendance/staff/${encodeURIComponent(
+        `${import.meta.env.VITE_API_URL}/api/attendance/staff/${encodeURIComponent(
           staffId
         )}`
       );
@@ -48,7 +48,7 @@ const AttendanceHistory = () => {
   const handleCheckOut = async (id) => {
     try {
       const response = await fetch(
-        "http://localhost:5000/api/attendance/checkout",
+        `${import.meta.env.VITE_API_URL}/api/attendance/checkout`,
         {
           method: "POST",
           headers: {

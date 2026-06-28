@@ -53,7 +53,7 @@ const JobCardManagement = () => {
 
   const fetchJobs = async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/jobcards");
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/jobcards`);
 
       const data = await res.json();
 
@@ -71,8 +71,8 @@ const JobCardManagement = () => {
   const fetchUsers = async () => {
     try {
       const [customerRes, b2bRes] = await Promise.all([
-        fetch("http://localhost:5000/api/customers"),
-        fetch("http://localhost:5000/api/b2b"),
+        fetch(`${import.meta.env.VITE_API_URL}/api/customers`),
+        fetch(`${import.meta.env.VITE_API_URL}/api/b2b`),
       ]);
 
       const customers = await customerRes.json();
@@ -103,7 +103,7 @@ const JobCardManagement = () => {
 
       if (editingId) {
         response = await fetch(
-          `http://localhost:5000/api/jobcards/${editingId}`,
+          `${import.meta.env.VITE_API_URL}/api/jobcards/${editingId}`,
           {
             method: "PUT",
             headers: {
@@ -118,7 +118,7 @@ const JobCardManagement = () => {
           },
         );
       } else {
-        response = await fetch("http://localhost:5000/api/jobcards", {
+        response = await fetch(`${import.meta.env.VITE_API_URL}/api/jobcards`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -200,9 +200,12 @@ const JobCardManagement = () => {
     if (!confirmDelete) return;
 
     try {
-      const response = await fetch(`http://localhost:5000/api/jobcards/${id}`, {
-        method: "DELETE",
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/jobcards/${id}`,
+        {
+          method: "DELETE",
+        },
+      );
 
       const data = await response.json();
 

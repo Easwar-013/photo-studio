@@ -34,7 +34,7 @@ const AvailableJobs = () => {
 
   const fetchAvailableJobs = async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/jobcards/available");
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/jobcards/available`);
 
       const data = await res.json();
 
@@ -56,7 +56,7 @@ const AvailableJobs = () => {
 
     try {
       const res = await fetch(
-        `http://localhost:5000/api/jobcards/accept/${jobId}`,
+        `${import.meta.env.VITE_API_URL}/api/jobcards/accept/${jobId}`,
         {
           method: "PUT",
           headers: {

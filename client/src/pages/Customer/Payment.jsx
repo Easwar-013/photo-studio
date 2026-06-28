@@ -13,7 +13,7 @@ const Payment = () => {
     try {
       // Create Razorpay Order
       const orderRes = await fetch(
-        "http://localhost:5000/api/payment/create-order",
+        `${import.meta.env.VITE_API_URL}/api/payment/create-order`,
         {
           method: "POST",
           headers: {
@@ -45,7 +45,7 @@ const Payment = () => {
           // Update MongoDB after payment success
 
           const response = await fetch(
-            `http://localhost:5000/api/payment/pay/${jobId}`,
+            `${import.meta.env.VITE_API_URL}/api/payment/pay/${jobId}`,
             {
               method: "POST",
             },

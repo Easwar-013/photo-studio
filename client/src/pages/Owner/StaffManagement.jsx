@@ -13,7 +13,7 @@ const StaffManagement = () => {
 
   const fetchStaffs = async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/staff");
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/staff`);
       const data = await res.json();
 
       if (Array.isArray(data)) {
@@ -36,9 +36,12 @@ const StaffManagement = () => {
     if (!confirmDelete) return;
 
     try {
-      const response = await fetch(`http://localhost:5000/api/staff/${id}`, {
-        method: "DELETE",
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/staff/${id}`,
+        {
+          method: "DELETE",
+        },
+      );
 
       const data = await response.json();
 

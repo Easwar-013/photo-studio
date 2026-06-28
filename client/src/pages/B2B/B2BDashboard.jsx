@@ -24,7 +24,7 @@ const B2BDashboard = () => {
       }
 
       const res = await fetch(
-        `http://localhost:5000/api/jobcards/customer/${b2bEmail}`,
+        `${import.meta.env.VITE_API_URL}/jobcards/customer/${b2bEmail}`,
       );
 
       const data = await res.json();

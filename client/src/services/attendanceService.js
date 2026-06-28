@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API = "http://localhost:5000/api/attendance";
+const API = `${import.meta.env.VITE_API_URL}/api/attendance`;
 
 export const checkIn = (data) =>
   axios.post(`${API}/checkin`, data);

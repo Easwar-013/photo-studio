@@ -10,7 +10,7 @@ const AttendanceManagement = () => {
 
   const fetchAttendance = async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/attendance");
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/attendance`);
       const data = await res.json();
 
       setAttendance(data);

@@ -33,7 +33,7 @@ const MyJobs = () => {
   const fetchMyJobs = async () => {
     try {
       const res = await fetch(
-        `http://localhost:5000/api/jobcards/staff/${encodeURIComponent(
+        `${import.meta.env.VITE_API_URL}/api/jobcards/staff/${encodeURIComponent(
           staffId,
         )}`,
       );
@@ -65,7 +65,7 @@ const MyJobs = () => {
 
     try {
       const res = await fetch(
-        `http://localhost:5000/api/jobcards/progress/${id}`,
+        `${import.meta.env.VITE_API_URL}/api/jobcards/progress/${id}`,
         {
           method: "PUT",
           headers: {
@@ -102,7 +102,7 @@ const MyJobs = () => {
 
     try {
       const res = await fetch(
-        `http://localhost:5000/api/jobcards/complete/${id}`,
+        `${import.meta.env.VITE_API_URL}/api/jobcards/complete/${id}`,
         {
           method: "PUT",
         },

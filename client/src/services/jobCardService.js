@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API = "http://localhost:5000/api/jobcards";
+const API = `${import.meta.env.VITE_API_URL}/api/jobcards`;
 
 export const getJobs = () => axios.get(API);
 

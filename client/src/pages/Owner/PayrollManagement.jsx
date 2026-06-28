@@ -14,7 +14,7 @@ const PayrollManagement = () => {
 
   const fetchPayrolls = async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/payroll");
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/payroll`);
       const data = await res.json();
 
       setPayrolls(Array.isArray(data) ? data : []);
@@ -30,16 +30,19 @@ const PayrollManagement = () => {
     }
 
     try {
-      const res = await fetch("http://localhost:5000/api/payroll/generate", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+      const res = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/payroll/generate`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            staffId,
+            month,
+          }),
         },
-        body: JSON.stringify({
-          staffId,
-          month,
-        }),
-      });
+      );
 
       const data = await res.json();
 
@@ -59,7 +62,7 @@ const PayrollManagement = () => {
     if (!window.confirm("Delete this payroll record?")) return;
 
     try {
-      const res = await fetch(`http://localhost:5000/api/payroll/${id}`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/payroll/${id}`, {
         method: "DELETE",
       });
 

@@ -30,7 +30,7 @@ const StaffDashboard = () => {
       }
 
       const res = await fetch(
-        `http://localhost:5000/api/attendance/staff/${encodeURIComponent(staffId)}`,
+        `${import.meta.env.VITE_API_URL}/api/attendance/staff/${encodeURIComponent(staffId)}`,
       );
 
       const data = await res.json();
@@ -50,7 +50,7 @@ const StaffDashboard = () => {
 
   const fetchPayroll = async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/payroll");
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/payroll`);
       const data = await res.json();
 
       setPayroll(Array.isArray(data) ? data : []);
@@ -64,7 +64,7 @@ const StaffDashboard = () => {
       const staffId = localStorage.getItem("staffId");
 
       const res = await fetch(
-        `http://localhost:5000/api/jobcards/staff/${encodeURIComponent(staffId)}`,
+        `${import.meta.env.VITE_API_URL}/api/jobcards/staff/${encodeURIComponent(staffId)}`,
       );
 
       const data = await res.json();
@@ -87,7 +87,7 @@ const StaffDashboard = () => {
 
     try {
       const response = await fetch(
-        "http://localhost:5000/api/attendance/checkin",
+        `${import.meta.env.VITE_API_URL}/api/attendance/checkin`,
         {
           method: "POST",
           headers: {
@@ -119,7 +119,7 @@ const StaffDashboard = () => {
   const handleCheckOut = async (id) => {
     try {
       const response = await fetch(
-        "http://localhost:5000/api/attendance/checkout",
+        `${import.meta.env.VITE_API_URL}/api/attendance/checkout`,
         {
           method: "POST",
           headers: {

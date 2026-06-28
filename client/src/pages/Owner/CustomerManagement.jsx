@@ -12,7 +12,7 @@ const CustomerManagement = () => {
 
   const fetchCustomers = async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/customers");
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/customers`);
 
       const data = await res.json();
 
@@ -24,7 +24,7 @@ const CustomerManagement = () => {
 
   const fetchJobs = async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/jobcards");
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/jobcards`);
 
       const data = await res.json();
 
@@ -36,7 +36,7 @@ const CustomerManagement = () => {
 
   const closeCustomer = async (id) => {
     try {
-      await fetch(`http://localhost:5000/api/customers/close/${id}`, {
+      await fetch(`${import.meta.env.VITE_API_URL}/api/customers/close/${id}`, {
         method: "PUT",
       });
 
@@ -48,7 +48,7 @@ const CustomerManagement = () => {
 
   const activateCustomer = async (id) => {
     try {
-      await fetch(`http://localhost:5000/api/customers/activate/${id}`, {
+      await fetch(`${import.meta.env.VITE_API_URL}/api/customers/activate/${id}`, {
         method: "PUT",
       });
 
@@ -62,7 +62,7 @@ const CustomerManagement = () => {
     if (!window.confirm("Delete Customer Permanently?")) return;
 
     try {
-      await fetch(`http://localhost:5000/api/customers/${id}`, {
+      await fetch(`${import.meta.env.VITE_API_URL}/api/customers/${id}`, {
         method: "DELETE",
       });
 

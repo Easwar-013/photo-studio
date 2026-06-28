@@ -46,7 +46,7 @@ const CreateStaff = () => {
 
       if (editingStaff) {
         response = await fetch(
-          `http://localhost:5000/api/staff/${editingStaff._id}`,
+          `${import.meta.env.VITE_API_URL}/api/staff/${editingStaff._id}`,
           {
             method: "PUT",
             headers: {
@@ -56,7 +56,7 @@ const CreateStaff = () => {
           },
         );
       } else {
-        response = await fetch("http://localhost:5000/api/staff", {
+        response = await fetch(`${import.meta.env.VITE_API_URL}/api/staff`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

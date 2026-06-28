@@ -10,7 +10,7 @@ const B2BManagement = () => {
 
   const fetchClients = async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/b2b");
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/b2b`);
 
       const data = await res.json();
 
